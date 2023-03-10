@@ -1,4 +1,4 @@
-# elevatus-selenium-pytest
+# Task 1 - elevatus-selenium-pytest
 ## Selenium-Pytest-Automation-Framework Demo
 ### Objective:
 Elevatus "https://automations.elevatus.io/" is an employee and candidate portal. The task given was to register as a candidate and apply for a job using the 'fill in manually' link.
@@ -38,6 +38,19 @@ In the terminal of source code install requirement.txt file by running this comm
 * The --browser flag tells which browser to run on. The three option are chrome, firefox and edge at the moment.
 * The --html flag directs to the folder in which the report is to be saved and the report name.
 
+
+# Task 2 - Running a Postman Collection with Newman
+## Installing Newman
+
+ `npm install -g newman` 
+
+ - This will install Newman globally on your system.
+
+ ## Running Postman Collection
+
+ - Once you have Newman installed, you can run a Postman collection from the command line using the following command
+
+`newman run JobTitles.postman_collection.json;`
 
 
 
