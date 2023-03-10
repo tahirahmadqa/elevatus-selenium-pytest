@@ -1,0 +1,242 @@
+{
+	"info": {
+		"_postman_id": "ee190505-1505-4376-99a6-cd2a6df69d84",
+		"name": "Job Titles",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20584030"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Extract value from JSON response\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var accountUuid = jsonData.results.account_uuid; \r",
+							"    console.log(\"Account UUID: \" + accountUuid); \r",
+							"    pm.environment.set(\"account_uuid\", accountUuid);\r",
+							"\r",
+							"    var companyUuid = jsonData.results.companies[0].uuid; \r",
+							"    console.log(\"Company UUID: \" + companyUuid); \r",
+							"    pm.environment.set(\"company\", companyUuid);\r",
+							"\r",
+							"    var token = jsonData.results.token; \r",
+							"    console.log(\"token: \" + token); \r",
+							"    pm.environment.set(\"token\", token);\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is not null\", function () {\r",
+							"    pm.expect(pm.response.json()).not.equal(null);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Account_uuid,company_uuid and token is not null\", function () {\r",
+							"    pm.expect(pm.response.json().results.account_uuid).to.not.be.null;\r",
+							"    pm.expect(pm.response.json().results.companies[0].uuid).to.not.be.null;\r",
+							"    pm.expect(pm.response.json().results.token).to.not.be.null;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"email\": \"z.lafi+automation@elevatus.io\",\n   \"password\": \"Auto123123$\",\n   \"isRememberMe\": false,\n   \"focusedEmail\": true,\n   \"error\": false\n}\n"
+				},
+				"url": {
+					"raw": "https://pdew4adapiv1.elevatustesting.xyz/api/v1/user/login",
+					"protocol": "https",
+					"host": [
+						"pdew4adapiv1",
+						"elevatustesting",
+						"xyz"
+					],
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Category",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Extract value from JSON response\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var categoryUuid = jsonData.results[0].uuid;\r",
+							"    console.log(\"Category UUID: \" + categoryUuid); \r",
+							"    pm.environment.set(\"category_uuid\", categoryUuid);\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is not null\", function () {\r",
+							"    pm.expect(pm.response.json()).not.equal(null);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Account_uuid,company_uuid and token is not null\", function () {\r",
+							"    pm.expect(pm.response.json().results[0].uuid).to.not.be.null;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept-account",
+						"value": "{{account_uuid}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept-company",
+						"value": "{{company}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://pdew4adapiv1.elevatustesting.xyz/api/setup/v1/category/list",
+					"protocol": "https",
+					"host": [
+						"pdew4adapiv1",
+						"elevatustesting",
+						"xyz"
+					],
+					"path": [
+						"api",
+						"setup",
+						"v1",
+						"category",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Job Title",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 422\", function () {\r",
+							"    pm.response.to.have.status(422);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is not null\", function () {\r",
+							"    pm.expect(pm.response.json()).not.equal(null);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept-account",
+						"value": "{{account_uuid}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept-company",
+						"value": "65ab4b5d-fdb6-4aa0-8b61-bc6979974e4a",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"name\": {\n       \"en\": \"Automation QA\"\n   },\n   \"code\": \"ksjdfhjkdshfjkf\",\n   \"status\": true,\n   \"category_uuid\": {{category_uuid}}\n}\n\n"
+				},
+				"url": {
+					"raw": "https://pdew4adapiv1.elevatustesting.xyz/api/setup/v1/organizational/job-title",
+					"protocol": "https",
+					"host": [
+						"pdew4adapiv1",
+						"elevatustesting",
+						"xyz"
+					],
+					"path": [
+						"api",
+						"setup",
+						"v1",
+						"organizational",
+						"job-title"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
